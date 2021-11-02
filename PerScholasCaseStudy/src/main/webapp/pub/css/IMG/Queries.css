@@ -1,0 +1,428 @@
+@charset "UTF-8";
+
+/*Big tablet to 2000px (widths smaller than the 1140px row)*/
+@media only screen and (max-width:2100px) {
+
+    /* ---------------------------------------------------------*/
+    /* index */
+    /*----------------------------------------------------------*/
+    h1 {
+        margin-bottom: 20px;
+        font-size: 370%;
+        word-spacing: 4px;
+
+    }
+
+    header {
+
+        height: 100vh;
+        margin-left: 90vh;
+
+    }
+
+    .nav-logo {
+        margin-bottom: -100px;
+    }
+
+    .main-nav {
+        margin-left: 1100px !important;
+        margin-top: 10px;
+    }
+
+    .main-logo {
+        transform: translate(-250%, -35%);
+    }
+
+    .main-paragraph {
+
+        font-size: 120%;
+    }
+
+    /* ---------------------------------------------------------*/
+    /* login */
+    /*----------------------------------------------------------*/
+
+    .login-logo {
+        height: 40vh;
+        margin-top: -240px;
+        margin-left: -30px;
+        margin-bottom: -60px;
+    }
+
+    .sign-up-title {
+
+        margin-top: -500px;
+        margin-bottom: -420px;
+
+    }
+
+
+
+    /* ---------------------------------------------------------*/
+    /* foodlog */
+    /*----------------------------------------------------------*/
+
+
+    .food-background-container {
+
+        height: 250px;
+        width: 250px;
+        margin-left: 5%;
+
+    }
+
+    .food-background-container2 {
+
+        transform: translate(550%, -10%);
+        height: 300px;
+        width: 300px;
+    }
+
+}
+
+
+
+/*Big tablet to 2000px (widths smaller than the 1140px row)*/
+@media only screen and (max-width:1930px) {
+
+    .food-background-container2 {
+
+        transform: translate(510%, -10%);
+        height: 300px;
+        width: 300px;
+    }
+
+    .main-nav {
+        margin-left: 900px !important;
+        margin-top: 10px;
+    }
+
+    .outerprofile {
+        max-width: 45%;
+        margin-left: 27.33%;
+        margin-top: 8%;
+        padding-top: 20vh;
+        padding-bottom: 15vh;
+
+    }
+}
+
+@media only screen and (max-width:1690px) {
+
+    h1 {
+        margin-bottom: 20px;
+        font-size: 350%;
+        word-spacing: 4px;
+
+    }
+
+    header {
+
+        height: 100vh;
+        margin-left: 70vh;
+
+    }
+
+    .main-nav {
+        margin-left: 700px !important;
+        margin-top: 10px;
+    }
+
+    .hero-text-box {
+
+        width: 150vh;
+        transform: translate(-38%, -38%);
+        text-align: center;
+
+    }
+
+
+    .main-logo {
+        transform: translate(-200%, -35%);
+    }
+
+
+    .food-background-container {
+
+        height: 200px;
+        width: 200px;
+        margin-left: 5%;
+
+    }
+
+
+    .food-background-container2 {
+
+        transform: translate(540%, 0%);
+        height: 250px;
+        width: 250px;
+    }
+
+    .food-box {
+        padding: 40px;
+
+    }
+
+    .button-table {
+        margin-left: 15%;
+        margin-top: 6%;
+
+
+    }
+
+    .button1-table {
+        margin-left: 15%;
+
+    }
+
+    .btn:link,
+    .btn:visited {
+        padding: 15px 20px;
+    }
+
+    .outerprofile {
+        max-width: 45%;
+        margin-left: 27.33%;
+        margin-top: 8%;
+        padding-top: 20vh;
+        padding-bottom: 15vh;
+
+    }
+
+}
+
+
+
+/*Big tablet to 2000px (widths smaller than the 1140px row)*/
+@media only screen and (max-width:1400px) {
+    h1 {
+
+        font-size: 330%;
+        word-spacing: 4px;
+
+    }
+
+    header {
+
+        height: 70vh;
+        margin-left: 70vh;
+        margin-top: 40vh;
+
+    }
+
+
+    .main-nav li a:link,
+    .main-nav li a:visited {
+
+        font-size: 135%;
+
+
+    }
+
+    .hero-text-box {
+
+        transform: translate(-40%, -38%);
+        text-align: center;
+
+    }
+
+    .main-nav {
+        margin-left: 500px !important;
+        margin-top: 15px !important;
+    }
+
+    .nav-logo {
+        margin-bottom: -90px;
+    }
+
+
+    footer {
+
+        padding: 50px;
+        font-size: 90%;
+        background-attachment: fixed;
+        overflow: hidden;
+    }
+
+    .main-logo {
+        transform: translate(-200%, -148%);
+    }
+
+    .food-background-container2 {
+
+        transform: translate(470%, -5%);
+        height: 250px;
+        width: 250px;
+    }
+
+    .button-table {
+        margin-left: 11%;
+        margin-top: 6%;
+
+
+    }
+
+    .button1-table {
+        margin-left: 11%;
+
+    }
+
+    .outerprofile {
+        max-width: 45%;
+        margin-left: 27.33%;
+        margin-top: 8%;
+        padding-top: 20vh;
+        padding-bottom: 15vh;
+
+    }
+
+    .nav-logo {
+        margin-bottom: -85px;
+    }
+
+
+    .sign-up-title {
+
+        margin-top: 0px;
+        margin-bottom: 0px;
+
+    }
+
+    .login-title {
+        margin-top: 0px;
+        margin-bottom: 0px;
+
+    }
+
+    .login-logo {
+        height: 30vh;
+        margin-bottom: -80px;
+        margin-top: -200px;
+        margin-left: -100px;
+
+    }
+
+    .sign-up-con {
+        margin-top: -10vh
+    }
+
+    .s {
+        height: 75vh;
+    }
+
+    .login-con {
+        margin-top: -10px;
+    }
+}
+
+@media only screen and (max-width:1380px) {
+
+    h1 {
+
+        font-size: 250%;
+        word-spacing: 4px;
+
+    }
+
+    header {
+
+        height: 70vh;
+        margin-left: 98vh;
+        margin-top: 40vh;
+
+    }
+
+    .hero-text-box {
+
+        transform: translate(-38%, -39%);
+        text-align: center;
+
+    }
+
+    .main-nav {
+        margin-left: 500px !important;
+        margin-top: 5px !important;
+
+    }
+
+    .main-nav li a:link,
+    .main-nav li a:visited {
+        padding: 6px 0px;
+        text-transform: uppercase;
+        font-size: 120%;
+
+    }
+
+    .main-logo {
+        transform: translate(-270%, -148%);
+    }
+
+
+    .main-paragraph {
+
+        font-size: 100%;
+    }
+
+    .nav-logo {
+        margin-bottom: -70px;
+        margin-left: 50px;
+    }
+
+    .food-background-container2 {
+
+        transform: translate(440%, -5%);
+    }
+
+    .button-table {
+        margin-left: 8%;
+        margin-top: 6%;
+    }
+
+    .button1-table {
+        margin-left: 8%;
+
+    }
+
+    .sign-up-title {
+
+        margin-top: -100px;
+        margin-bottom: 0px;
+
+
+    }
+
+    .login-logo {
+        margin-bottom: 0px;
+        margin-top: -200px;
+        margin-left: -100px;
+        display:none;
+
+    }
+
+
+    .login-title {
+        margin-top: -45px;
+        margin-bottom: 0px;
+
+    }
+    .username{
+    margin-top: -180px !important;
+    }
+    
+    .login-pic {
+   
+  
+    height: 200vh;
+    width: 50%;
+    zoom: 28%;
+    padding: 50px;
+    transform: translateY(5%);
+
+}
+
+
+
+
+
+
+}
