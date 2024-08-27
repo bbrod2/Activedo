@@ -1,87 +1,85 @@
 package perscholas.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import perscholas.database.entity.User;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import perscholas.security.AuthenticationFailureHandlerImpl;
 import perscholas.security.AuthenticationSuccessHandlerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import perscholas.security.UserDetailsServiceImpl;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	
+@EnableMethodSecurity(prePostEnabled = true)
+public class SecurityConfig {
+
 	@Autowired
 	private AuthenticationSuccessHandlerImpl successHandler;
-	
+
 	@Autowired
 	private AuthenticationFailureHandlerImpl failureHandler;
-	
+
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 
-	@Override
-	protected void configure(final HttpSecurity http) throws Exception {
-		
-		
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.csrf().disable()
-			.authorizeRequests()
-	        	.antMatchers("/pub/**", "/error/**", "/login/**",  "/search" ).permitAll()
-				.antMatchers("/admin/**").authenticated()
-	        	.and()
-	        .formLogin()
-	            .loginPage("/login/login")
-	            .loginProcessingUrl("/login/j_security_check")
-	            .successHandler(successHandler)
-	            .failureHandler(failureHandler)
-	            .and()
-	        .logout()
-	            .invalidateHttpSession(true)
-	            .logoutUrl("/login/logout")
-	            .logoutSuccessUrl("/index")
-	            .and()
-	        .rememberMe()
-	        	.key("SR_KEY")
-	        	.tokenValiditySeconds(60 * 60 * 24 * 2)
-	        	.rememberMeParameter("remember-me")
-	        	.and()
-			.exceptionHandling()
-				.accessDeniedPage("/error/404");
-		
-		
-		
+				.csrf(csrf -> {
+					csrf
+							.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+					// or customize it further here
+					// .ignoringRequestMatchers("/api/**"); // Disable CSRF for specific endpoints
+				})
+				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+						.requestMatchers("/pub/**", "/error/**", "/login/**", "/search").permitAll()
+						.requestMatchers("/admin/**").authenticated()
+				)
+				.formLogin(formLogin -> formLogin
+						.loginPage("/login/login")
+						.loginProcessingUrl("/login/j_security_check")
+						.successHandler(successHandler)
+						.failureHandler(failureHandler)
+				)
+				.logout(logout -> logout
+						.invalidateHttpSession(true)
+						.logoutUrl("/login/logout")
+						.logoutSuccessUrl("/index")
+				)
+				.rememberMe(rememberMe -> rememberMe
+						.key("SR_KEY")
+						.tokenValiditySeconds(60 * 60 * 24 * 2)
+						.rememberMeParameter("remember-me")
+				)
+				.exceptionHandling(exceptionHandling -> exceptionHandling
+						.accessDeniedPage("/error/404")
+				);
+
+		return http.build();
 	}
-	
+
+
 	@Bean
 	public DaoAuthenticationProvider getAuthenticationProvider() {
-	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	    authProvider.setUserDetailsService(userDetailsService);
-	    authProvider.setPasswordEncoder(getPasswordEncoder());
-	    return authProvider;
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService);
+		authProvider.setPasswordEncoder(getPasswordEncoder());
+		return authProvider;
 	}
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	    auth.userDetailsService(userDetailsService);
-	    auth.authenticationProvider(getAuthenticationProvider());
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
 	}
-		
-	
-	@Bean(name="passwordEncoder")
+
+	@Bean(name = "passwordEncoder")
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}

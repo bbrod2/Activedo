@@ -1,6 +1,6 @@
 package perscholas.form;
 
-import javax.validation.constraints.Pattern;
+
 
 public class PreScreenForm {
 	private Integer Id;
