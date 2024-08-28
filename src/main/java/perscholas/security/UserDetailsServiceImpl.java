@@ -3,25 +3,20 @@ package perscholas.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.acls.model.AlreadyExistsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 import perscholas.database.dao.UserDAO;
 import perscholas.database.entity.User;
 import perscholas.database.entity.UserRole;
-import perscholas.form.SignUpForm;
+
+
 @Component
 public class UserDetailsServiceImpl  implements UserDetailsService {
 

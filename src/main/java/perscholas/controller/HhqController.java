@@ -1,22 +1,16 @@
 package perscholas.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import perscholas.database.dao.HhqAnswersDAO;
 import perscholas.database.dao.HhqDAO;
 import perscholas.database.dao.UserDAO;
-
 import perscholas.database.entity.HhqAnswers;
 import perscholas.database.entity.User;
 
@@ -80,9 +74,7 @@ public class HhqController {
 			
 				
 			}
-		
 
-		
 
 		return result;
 

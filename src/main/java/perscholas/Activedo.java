@@ -3,17 +3,16 @@ package perscholas;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class CaseStudyApplication extends SpringBootServletInitializer {
+public class Activedo extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(CaseStudyApplication.class);
+		return builder.sources(Activedo.class);
 	}
 	public static void main(String[] args) {
-		SpringApplication.run(CaseStudyApplication.class, args);
+		SpringApplication.run(Activedo.class, args);
 	}
 }
 
