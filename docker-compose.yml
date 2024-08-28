@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    image: activedo:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prd
+      SPRING_CONFIG_LOCATION: /app/config/application-prd.properties
+      DB_PSWD_FILE: /run/secrets/db_pswd
+    entrypoint: >
+      sh -c 'export DB_PSWD=$$(cat /run/secrets/db_pswd) && exec catalina.sh run'
+    secrets:
+      - db_pswd
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: overlay
+
+secrets:
+  db_pswd:
+    external: true

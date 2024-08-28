@@ -22,9 +22,8 @@
                         <img src="pub/css/IMG/Activedo-logos/Activedo-logos_white.png" alt="Activedo-logo"
                             class="login-logo">
                     </div>
-                    <form method="post" action="login/j_security_check">
+                    <form method="post" action="${pageContext.request.contextPath}/login/j_security_check">
                         <div class="row">
-
                             <div>
                                 <label>
                                     <p class="login-title">Welcome</p>
@@ -59,9 +58,9 @@
                                 </div>
                             </div>
                         </div>
-                </div>
+                    </form>
             </div>
-            </form>
+            </div>
 
             <div class="col span-1-of-2 login-pic">
                 <p> </p>
