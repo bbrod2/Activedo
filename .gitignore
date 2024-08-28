@@ -7,4 +7,12 @@
 /dataSources/
 /dataSources.local.xml
 docker/prd/application-prd.properties
-src/resources/application.properties
+src/main/resources/application-dev.properties
+.env
+target/PerScholasCaseStudy-0.0.1-SNAPSHOT/WEB-INF/classes/application-dev.properties
+target/classes/application-dev.properties
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+
+/target/PerScholasCaseStudy-0.0.1-SNAPSHOT/WEB-INF/classes
+/target

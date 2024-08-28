@@ -43,7 +43,7 @@ public class FoodLogController {
 		// Loop over and display breakfast lunch and dinner
 		// Remove extra copy and paste code done
 
-		ModelAndView modelandview = new ModelAndView("/login/foodlog");
+		ModelAndView modelandview = new ModelAndView("login/foodlog");
 
 		String email = principal.getName();
 		User user = userDao.findByEmail(email);

@@ -27,13 +27,12 @@ public class SignUpController {
 	@Autowired
 	private PasswordEncoder encoder;
 
-	@RequestMapping(value = "/SignUp", method = RequestMethod.GET)
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView signUpPage() {
-		ModelAndView result = new ModelAndView("signup/SignUp");
-		return result;
+        return new ModelAndView("signup/SignUp");
 	}
 
-	@RequestMapping(value = "/SignUp", method = RequestMethod.POST)
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ModelAndView signUpSubmit(@Valid SignUpForm form, BindingResult bindingResult) throws Exception {
 		ModelAndView result = new ModelAndView("signup/SignUp");
 
@@ -88,13 +87,13 @@ public class SignUpController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
-		ModelAndView result = new ModelAndView("/login/login");
+		ModelAndView result = new ModelAndView("login/login");
 		return result;
 	}
 	
 	@RequestMapping(value = "/stop", method = RequestMethod.GET)
 	public ModelAndView stop() {
-		ModelAndView result = new ModelAndView("/login/stop");
+		ModelAndView result = new ModelAndView("login/stop");
 		return result;
 	}
 	
@@ -103,7 +102,7 @@ public class SignUpController {
 	@RequestMapping(value = "/logout")
 	public ModelAndView logout(HttpSession session) {
 		session.invalidate();
-		ModelAndView result = new ModelAndView("/login/login");
+		ModelAndView result = new ModelAndView("login/login");
 		return result;
 	}
 	

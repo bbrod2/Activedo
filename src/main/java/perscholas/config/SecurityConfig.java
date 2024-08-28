@@ -7,10 +7,14 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import perscholas.security.AuthenticationFailureHandlerImpl;
 import perscholas.security.AuthenticationSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +33,20 @@ public class SecurityConfig {
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 
+/*
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 				.csrf(csrf -> {
-					csrf
-							.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-					// or customize it further here
-					// .ignoringRequestMatchers("/api/**"); // Disable CSRF for specific endpoints
+					csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 				})
 				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-						.requestMatchers("/pub/**", "/error/**", "/login/**", "/search").permitAll()
-						.requestMatchers("/admin/**").authenticated()
+						.requestMatchers("/signup", "/index", "/stop", "/pub/**", "/error/**", "/login/**").permitAll() // Allow access without authentication
+						.anyRequest().authenticated() // All other requests require authentication
 				)
 				.formLogin(formLogin -> formLogin
-						.loginPage("/login/login")
-						.loginProcessingUrl("/login/j_security_check")
+						.loginPage("/login/login") // Custom login page
+						.loginProcessingUrl("/login/j_security_check") // Custom login processing URL
 						.successHandler(successHandler)
 						.failureHandler(failureHandler)
 				)
@@ -64,6 +66,10 @@ public class SecurityConfig {
 
 		return http.build();
 	}
+*/
+
+
+
 
 
 	@Bean
@@ -83,4 +89,40 @@ public class SecurityConfig {
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+	@Bean
+	public InternalResourceViewResolver viewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/jsp/");
+		resolver.setSuffix(".jsp");
+		return resolver;
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http
+				.csrf(csrf -> csrf.disable()) // Disable CSRF protection if needed
+				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+						.anyRequest().permitAll() // Allow all requests without authentication
+				);
+
+		return http.build();
+	}
+
+	@Bean
+	public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+		StrictHttpFirewall firewall = new StrictHttpFirewall();
+		firewall.setAllowUrlEncodedSlash(true);  // Allows URLs with "%2F"
+		firewall.setAllowSemicolon(true);  // Allows URLs with semicolons ";"
+		firewall.setAllowBackSlash(true);  // Allows backslashes "\" in URLs
+		firewall.setAllowUrlEncodedPercent(true);  // Allows URLs with "%25"
+		firewall.setAllowUrlEncodedDoubleSlash(true);  // Allows double slashes "//" in URLs
+		return firewall;
+	}
+
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
+	}
+
 }
