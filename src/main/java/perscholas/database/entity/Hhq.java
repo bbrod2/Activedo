@@ -12,40 +12,60 @@ public class Hhq {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
+
 	@Column(name = "question")
 	private String question;
+
 	@Column(name = "type")
 	private String type;
+
 	@OneToMany(mappedBy = "hhq", fetch = FetchType.LAZY)
-   	private List<HhqAnswers> hhqAnswers  = new ArrayList<HhqAnswers>();
+	private List<HhqAnswers> hhqAnswers = new ArrayList<>();
+
+	public Hhq() {}
+
+	public Hhq(String question, String type) {
+		this.question = question;
+		this.type = type;
+	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public String getQuestion() {
 		return question;
 	}
+
 	public String getType() {
 		return type;
 	}
+
 	public List<HhqAnswers> getHhqAnswers() {
 		return hhqAnswers;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public void setQuestion(String question) {
 		this.question = question;
 	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
+
 	public void setHhqAnswers(List<HhqAnswers> hhqAnswers) {
 		this.hhqAnswers = hhqAnswers;
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(hhqAnswers, id, question, type);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -61,6 +81,7 @@ public class Hhq {
 		return Objects.equals(hhqAnswers, other.hhqAnswers) && Objects.equals(id, other.id)
 				&& Objects.equals(question, other.question) && Objects.equals(type, other.type);
 	}
+
 	@Override
 	public String toString() {
 		return "Hhq [id=" + id + ", question=" + question + ", type=" + type + ", hhqAnswers=" + hhqAnswers + "]";

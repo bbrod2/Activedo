@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import perscholas.database.dao.HhqAnswersDAO;
 import perscholas.database.dao.HhqDAO;
 import perscholas.database.dao.UserDAO;
+import perscholas.database.entity.Hhq;
 import perscholas.database.entity.HhqAnswers;
 import perscholas.database.entity.User;
 
@@ -28,7 +29,7 @@ public class HhqController {
 
 	@RequestMapping(value = "/hhqForm", method = RequestMethod.GET)
 	public ModelAndView hhqForm(Principal principal) {
-		ModelAndView result = new ModelAndView("/signup/hhqForm");
+		ModelAndView result = new ModelAndView("signup/hhqForm");
 		String email = principal.getName();
 		User user = userDao.findByEmail(email);
 		result.addObject("user", user);
@@ -41,43 +42,66 @@ public class HhqController {
 
 	@RequestMapping(value = "/hhqSubmit", method = RequestMethod.POST)
 	public ModelAndView hhqInputSubmit(HttpServletRequest request, Principal principal) {
-		ModelAndView result = new ModelAndView("/signup/hhqForm");
-		String[] i = request.getParameterValues("id");
-		
-		result.addObject("request", request);
+		// Initialize the default view to redirect to the HHQ form page
+		ModelAndView result = new ModelAndView("signup/hhqForm");
+
+		// Get the currently logged-in user's email and retrieve the user object
 		String email = principal.getName();
 		User user = userDao.findByEmail(email);
+
+		// Delete the user's previous answers before saving new ones
 		hhqAnswersDao.deleteAnswers(user.getId());
-		for ( String key : request.getParameterMap().keySet()) {
-			String value = request.getParameter(key);
-			System.out.println(key + " " + " " + value);
-			 HhqAnswers hhqAnswers = new HhqAnswers();
-			 hhqAnswers.setUser(user);
-			  hhqAnswers.setHhq(hhqDao.findById(Integer.parseInt(key))); 
-			  hhqAnswers.setCheckUncheck(1);
-			  hhqAnswersDao.save(hhqAnswers);
+
+		// Loop through each key in the request parameter map
+		for (String key : request.getParameterMap().keySet()) {
+			if (key.equals("_csrf")) {
+				continue; // Skip the CSRF token parameter
+			}
+
+			try {
+				// Parse the question ID from the key and find the corresponding Hhq object
+				int questionId = Integer.parseInt(key);
+				Hhq question = hhqDao.findById(questionId);
+
+				if (question != null) { // Ensure the question exists
+					// Create a new HhqAnswers object and populate its fields
+					HhqAnswers hhqAnswers = new HhqAnswers();
+					hhqAnswers.setUser(user);
+					hhqAnswers.setHhq(question);
+					hhqAnswers.setCheckUncheck(1); // Assuming '1' means the checkbox is checked
+
+					// Save the answer to the database
+					hhqAnswersDao.save(hhqAnswers);
+				}
+			} catch (NumberFormatException e) {
+				// Log and skip any keys that aren't valid integers
+				System.err.println("Invalid question ID: " + key);
+			}
 		}
 
-		
-		List<HhqAnswers> hhqAnswers = hhqAnswersDao.getUserAnswers(user.getId());
-		for(HhqAnswers answer: hhqAnswers) {
-			int qId = answer.getHhq().getId();
-			if(qId == 35) {
-				
-				ModelAndView result2 = new ModelAndView("redirect:/profile");
-				return result2; 
-			}else {
-				
-				ModelAndView result3 = new ModelAndView("redirect:/stop");
-				return result3;
-			}
-			
-				
-			}
+		// Retrieve all the user's answers from the database
+		List<HhqAnswers> hhqAnswersList = hhqAnswersDao.getUserAnswers(user.getId());
 
+		// Check the user's answers and redirect based on specific conditions
+		boolean shouldRedirectToProfile = false;
+		for (HhqAnswers answer : hhqAnswersList) {
+			int qId = answer.getHhq().getId();
+
+			if (qId == 35 && answer.getCheckUncheck() == 1) { // Ensure the specific checkbox is checked
+				shouldRedirectToProfile = true;
+				break; // Exit loop once the condition is met
+			}
+		}
+
+		// Redirect to the appropriate page based on the user's answers
+		if (shouldRedirectToProfile) {
+			result = new ModelAndView("redirect:/profile");
+		} else {
+			result = new ModelAndView("redirect:/stop");
+		}
 
 		return result;
-
 	}
+
 
 }

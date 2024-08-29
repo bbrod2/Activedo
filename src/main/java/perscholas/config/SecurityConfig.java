@@ -8,9 +8,13 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
@@ -18,7 +22,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import perscholas.security.AuthenticationFailureHandlerImpl;
 import perscholas.security.AuthenticationSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import perscholas.security.CustomAuthenticationFilter;
 import perscholas.security.UserDetailsServiceImpl;
+
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
@@ -33,40 +39,48 @@ public class SecurityConfig {
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 
-/*
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+		@Bean
+		public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+			CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager);
+			customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+			customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
+
 		http
-				.csrf(csrf -> {
-					csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-				})
-				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-						.requestMatchers("/signup", "/index", "/stop", "/pub/**", "/error/**", "/login/**").permitAll() // Allow access without authentication
-						.anyRequest().authenticated() // All other requests require authentication
+				.csrf(csrf -> csrf.disable())  // Disable CSRF protection if needed
+				.authorizeHttpRequests(authorizeRequests ->
+						authorizeRequests
+								.requestMatchers("/index","/index/*","/login", "/login/**", "/error", "/css/**", "/js/**", "/signup", "/submitsignup", "/").permitAll()
+								.requestMatchers("/WEB-INF/jsp/**").permitAll()
+								.requestMatchers("/pub/**", "/images/**").permitAll()
+								.requestMatchers("/hhqForm").authenticated()
+								.anyRequest().authenticated()  // Require authentication for all other requests
+				)
+				.sessionManagement(sessionManagement ->
+						sessionManagement
+								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
+								.sessionFixation().migrateSession()  // Protect against session fixation attacks
+								.maximumSessions(1).maxSessionsPreventsLogin(false)  // Optional: Limit to one session per user
 				)
 				.formLogin(formLogin -> formLogin
-						.loginPage("/login/login") // Custom login page
-						.loginProcessingUrl("/login/j_security_check") // Custom login processing URL
+						.loginPage("/login/login")
+						.loginProcessingUrl("/login")
 						.successHandler(successHandler)
 						.failureHandler(failureHandler)
 				)
-				.logout(logout -> logout
-						.invalidateHttpSession(true)
-						.logoutUrl("/login/logout")
-						.logoutSuccessUrl("/index")
+				.logout(logout ->
+						logout
+								.logoutUrl("/logout")
+								.logoutSuccessUrl("/login?logout")  // Redirect to /login after logout
+								.permitAll()
 				)
-				.rememberMe(rememberMe -> rememberMe
-						.key("SR_KEY")
-						.tokenValiditySeconds(60 * 60 * 24 * 2)
-						.rememberMeParameter("remember-me")
-				)
-				.exceptionHandling(exceptionHandling -> exceptionHandling
-						.accessDeniedPage("/error/404")
+				.exceptionHandling(exceptionHandling ->
+						exceptionHandling
+								.accessDeniedPage("/error")  // Custom access denied page
 				);
 
 		return http.build();
 	}
-*/
 
 
 
@@ -80,10 +94,8 @@ public class SecurityConfig {
 		return authProvider;
 	}
 
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-		return authConfig.getAuthenticationManager();
-	}
+
+
 
 	@Bean(name = "passwordEncoder")
 	public PasswordEncoder getPasswordEncoder() {
@@ -98,16 +110,6 @@ public class SecurityConfig {
 		return resolver;
 	}
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-				.csrf(csrf -> csrf.disable()) // Disable CSRF protection if needed
-				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-						.anyRequest().permitAll() // Allow all requests without authentication
-				);
-
-		return http.build();
-	}
 
 	@Bean
 	public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
@@ -124,5 +126,22 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
 	}
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
+
+
+	@Bean
+	public AuthenticationSuccessHandler authenticationSuccessHandler() {
+		return new AuthenticationSuccessHandlerImpl();  // Your custom success handler
+	}
+
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new AuthenticationFailureHandlerImpl();  // Your custom failure handler
+	}
+
+
 
 }

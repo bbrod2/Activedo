@@ -22,7 +22,7 @@
                         <img src="pub/css/IMG/Activedo-logos/Activedo-logos_white.png" alt="Activedo-logo"
                             class="login-logo">
                     </div>
-                    <form method="post" action="${pageContext.request.contextPath}/login/j_security_check">
+                    <form method="post" action="${pageContext.request.contextPath}/login">
                         <div class="row">
                             <div>
                                 <label>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="row">
                                 <div>
-                                    <a class="sign-up-link" href="/SignUp">Don't have an account? Sign up</a>
+                                    <a class="sign-up-link" href="/signup">Don't have an account? Sign up</a>
                                 </div>
                             </div>
 

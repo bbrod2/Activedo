@@ -64,17 +64,21 @@ public class UserDetailsServiceImpl  implements UserDetailsService {
 //
 //		return authorities;
 //	}​
-	private Collection<? extends GrantedAuthority> buildGrantAuthorities(List<UserRole> userRoles) {
-		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+private Collection<? extends GrantedAuthority> buildGrantAuthorities(List<UserRole> userRoles) {
+	List<GrantedAuthority> authorities = new ArrayList<>();
 
-		for (UserRole role : userRoles) {
-			authorities.add(new SimpleGrantedAuthority(role.getUserRole().toString()));
-		}
-
-		// always add the user role
-		authorities.add(new SimpleGrantedAuthority("USER"));
-
-		return authorities;
+	for (UserRole role : userRoles) {
+		String roleName = "ROLE_" + role.getUserRole().toString();
+		authorities.add(new SimpleGrantedAuthority(roleName));
+		LOG.info("Assigning role: " + roleName + " to user");
 	}
 
- }
+	// always add the user role
+	authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+	LOG.info("Assigning role: ROLE_USER to user");
+
+	return authorities;
+}
+
+
+}
