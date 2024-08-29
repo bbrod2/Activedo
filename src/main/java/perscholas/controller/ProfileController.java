@@ -16,7 +16,7 @@ public class ProfileController {
 
 	@GetMapping("/profile")
 	public ModelAndView showProfilepage(Principal principal) {
-		ModelAndView modelandview = new ModelAndView("/login/profile");
+		ModelAndView modelandview = new ModelAndView("login/profile");
 		String email = principal.getName();
 		User user = userDao.findByEmail(email);
 		modelandview.addObject("user", user);

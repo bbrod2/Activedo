@@ -10,7 +10,7 @@ public class SignUpForm {
 	
 	@NotEmpty(message = "Email can not be empty.")
 	// @Email(message = "@Email is invalid")
-	@Pattern(regexp = "^.*@.*$", message = "Email @Pattrn format invalid")
+
 	private String email;
 
 	@NotEmpty(message = "Password can not be empty.")

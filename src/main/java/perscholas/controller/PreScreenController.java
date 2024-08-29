@@ -30,7 +30,7 @@ public class PreScreenController {
 	
 	@GetMapping("/prescreen")
 	public ModelAndView showPreScreenPage(Principal principal) {
-		ModelAndView modelandview = new ModelAndView("/signup/prescreen");
+		ModelAndView modelandview = new ModelAndView("signup/prescreen");
 		String email = principal.getName();
 		User user = userDao.findByEmail(email);
 		modelandview.addObject("user", user);

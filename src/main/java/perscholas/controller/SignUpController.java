@@ -3,6 +3,8 @@ package perscholas.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +28,13 @@ public class SignUpController {
 	
 	@Autowired
 	private PasswordEncoder encoder;
-
+	@PermitAll
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView signUpPage() {
         return new ModelAndView("signup/SignUp");
 	}
-
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	@PermitAll
+	@RequestMapping(value = "/submitsignup", method = RequestMethod.POST)
 	public ModelAndView signUpSubmit(@Valid SignUpForm form, BindingResult bindingResult) throws Exception {
 		ModelAndView result = new ModelAndView("signup/SignUp");
 
@@ -75,16 +77,16 @@ public class SignUpController {
 		return result2;
 	}
 
-	
 
+	@PermitAll
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView homePage() {
 		ModelAndView result = new ModelAndView("index");
 		return result;
 	}
 
-	
-	
+
+	@PermitAll
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
 		ModelAndView result = new ModelAndView("login/login");
@@ -96,9 +98,9 @@ public class SignUpController {
 		ModelAndView result = new ModelAndView("login/stop");
 		return result;
 	}
-	
-	
-	
+
+
+	@PermitAll
 	@RequestMapping(value = "/logout")
 	public ModelAndView logout(HttpSession session) {
 		session.invalidate();

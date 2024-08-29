@@ -28,7 +28,7 @@ public class HhqController {
 
 	@RequestMapping(value = "/hhqForm", method = RequestMethod.GET)
 	public ModelAndView hhqForm(Principal principal) {
-		ModelAndView result = new ModelAndView("/signup/hhqForm");
+		ModelAndView result = new ModelAndView("signup/hhqForm");
 		String email = principal.getName();
 		User user = userDao.findByEmail(email);
 		result.addObject("user", user);
@@ -41,7 +41,7 @@ public class HhqController {
 
 	@RequestMapping(value = "/hhqSubmit", method = RequestMethod.POST)
 	public ModelAndView hhqInputSubmit(HttpServletRequest request, Principal principal) {
-		ModelAndView result = new ModelAndView("/signup/hhqForm");
+		ModelAndView result = new ModelAndView("signup/hhqForm");
 		String[] i = request.getParameterValues("id");
 		
 		result.addObject("request", request);

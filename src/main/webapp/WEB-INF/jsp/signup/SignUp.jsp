@@ -25,8 +25,8 @@
 		<div class=" row shadow sign-up-con">
 			<div class="col span-1-of-2 login-side s">
 				<div class="survey">
-					<form method="post" action="/SignUp" name="sign-up"
-						onsubmit="return validateGender() && validateUsername() && validateAge()">
+					<form method="post" action="/submitsignup" name="sign-up"
+						  onsubmit="return validateGender() && validateUsername() && validateAge()">
 				
 						<div class="row">
 							<div>

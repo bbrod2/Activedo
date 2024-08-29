@@ -19,7 +19,7 @@
 <nav>
     <div>
         <ul class="main-nav">
-            <li><a href="/SignUp">Get started</a></li>
+            <li><a href="/signup">Get started</a></li>
             <li><a href="/login">Login</a></li>
         </ul>
     </div>
@@ -33,7 +33,7 @@
         <p class="main-paragraph"><strong>Achieve</strong> your fitness goals today through the aid of<br> the Activedo personal trainer virtual assistant.<br>
             With the best in the class diet and training advice<br> achieve <strong>the perfect body</strong> you have always dreamt of <strong>today!</strong>
         </p>
-        <a class="btn btn-full" href="/SignUp">Get Started</a>
+        <a class="btn btn-full" href="/signup">Get Started</a>
         <a class="btn btn-ghost" href="/login">Login</a>
     </div>
 </header>
