@@ -23,7 +23,6 @@
                             class="login-logo">
                     </div>
                     <form method="post" action="${pageContext.request.contextPath}/login">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                         <div class="row">
                             <div>
                                 <label>

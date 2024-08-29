@@ -20,4 +20,6 @@ public interface HhqDAO extends JpaRepository<Hhq, Long>  {
 	@Query(value = "select hq.* from form_hhq hq, form_hhq_answers fqa where hq.id = fqa.question_id and fqa.user_id = :userId", nativeQuery = true)
 	List<Hhq> getUserAnsQuestions(@Param("userId") Integer userId);
 
+	boolean existsByQuestion(String question);
 }
+

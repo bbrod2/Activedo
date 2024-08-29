@@ -15,7 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
@@ -26,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import perscholas.security.CustomAuthenticationFilter;
 import perscholas.security.UserDetailsServiceImpl;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
@@ -49,8 +47,7 @@ public class SecurityConfig {
 			customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
 
 		http
-				.csrf(csrf -> csrf
-						.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))  // Disable CSRF protection if needed
+				.csrf(csrf -> csrf.disable())  // Disable CSRF protection if needed
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
 								.requestMatchers("/index","/index/*","/login", "/login/**", "/error", "/css/**", "/js/**", "/signup", "/submitsignup", "/").permitAll()
@@ -62,9 +59,15 @@ public class SecurityConfig {
 				.sessionManagement(sessionManagement ->
 						sessionManagement
 								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
+								.sessionFixation().migrateSession()  // Protect against session fixation attacks
 								.maximumSessions(1).maxSessionsPreventsLogin(false)  // Optional: Limit to one session per user
 				)
-				.addFilterAt(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+				.formLogin(formLogin -> formLogin
+						.loginPage("/login/login")
+						.loginProcessingUrl("/login")
+						.successHandler(successHandler)
+						.failureHandler(failureHandler)
+				)
 				.logout(logout ->
 						logout
 								.logoutUrl("/logout")
@@ -81,7 +84,7 @@ public class SecurityConfig {
 
 
 
-/*
+
 
 	@Bean
 	public DaoAuthenticationProvider getAuthenticationProvider() {
@@ -90,7 +93,7 @@ public class SecurityConfig {
 		authProvider.setPasswordEncoder(getPasswordEncoder());
 		return authProvider;
 	}
-*/
+
 
 
 
@@ -107,16 +110,6 @@ public class SecurityConfig {
 		return resolver;
 	}
 
-	/*@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-				.csrf(csrf -> csrf.disable()) // Disable CSRF protection if needed
-				.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-						.anyRequest().permitAll() // Allow all requests without authentication
-				);
-
-		return http.build();
-	}*/
 
 	@Bean
 	public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
