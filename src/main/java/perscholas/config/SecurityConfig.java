@@ -47,7 +47,7 @@ public class SecurityConfig {
 			customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
 
 		http
-				
+
 				.csrf(csrf -> csrf.disable())  // Disable CSRF protection if needed
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
