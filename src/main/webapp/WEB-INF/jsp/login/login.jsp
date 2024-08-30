@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Activedo</title>
 <link rel="stylesheet" type="text/css" href="pub/css/IMG/normalize.css">
     <link rel="stylesheet" type="text/css" href="pub/css/IMG/grid.css">
     <link rel="stylesheet" type="text/css" href="pub/css/IMG/style.css">
