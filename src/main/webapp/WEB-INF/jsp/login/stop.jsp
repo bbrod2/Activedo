@@ -12,7 +12,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
 	rel="stylesheet">
-<title>Insert title here</title>
+<title>Activedo</title>
 </head>
 <body>
 	<div class="stop col span-1-of-2">

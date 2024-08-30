@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Error Page</title>
+    <title>Activedo Error Page</title>
 </head>
 <body>
 <h1>An Error Occurred</h1>
@@ -11,6 +11,6 @@
 <p>Message: ${message}</p>
 <p>Exception: ${exception}</p>
 <p>Request URI: ${path}</p>
-<p><a href="/">Go to Home</a></p>
+<p><a href="/">Go Home</a></p>
 </body>
 </html>
