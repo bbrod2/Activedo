@@ -47,9 +47,7 @@ public class SecurityConfig {
 			customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
 
 		http
-				.requiresChannel(channel ->
-						channel.anyRequest().requiresSecure() // Forces HTTPS for all requests
-				)
+				
 				.csrf(csrf -> csrf.disable())  // Disable CSRF protection if needed
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
