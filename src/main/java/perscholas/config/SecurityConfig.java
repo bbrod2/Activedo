@@ -1,5 +1,11 @@
 package perscholas.config;
 
+import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import perscholas.security.CustomAuthenticationFilter;
 import perscholas.security.UserDetailsServiceImpl;
 
+import java.io.IOException;
+
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
@@ -40,18 +48,18 @@ public class SecurityConfig {
 	private UserDetailsServiceImpl userDetailsService;
 
 
-		@Bean
-		public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-			CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager);
-			customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-			customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+		CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager);
+		customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+		customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
 
 		http
 
 				.csrf(csrf -> csrf.disable())  // Disable CSRF protection if needed
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
-								.requestMatchers("/index","/index/*","/login", "/login/**", "/error", "/css/**", "/js/**", "/signup", "/submitsignup", "/").permitAll()
+								.requestMatchers("/index", "/index/*", "/login", "/login/**", "/error", "/css/**", "/js/**", "/signup", "/submitsignup", "/").permitAll()
 								.requestMatchers("/WEB-INF/jsp/**").permitAll()
 								.requestMatchers("/pub/**", "/images/**").permitAll()
 								.requestMatchers("/hhqForm").authenticated()
@@ -60,7 +68,7 @@ public class SecurityConfig {
 				.sessionManagement(sessionManagement ->
 						sessionManagement
 								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
-								.sessionFixation().migrateSession()  // Protect against session fixation attacks
+								.sessionFixation().migrateSession()// Protect against session fixation attacks
 								.maximumSessions(1)
 								.sessionRegistry(sessionRegistry())  // Limit to one session per user
 								.expiredUrl("/login?expired=true")
@@ -87,7 +95,6 @@ public class SecurityConfig {
 	}
 
 
-
 	@Bean
 	public SessionRegistry sessionRegistry() {
 		return new SessionRegistryImpl();
@@ -100,8 +107,6 @@ public class SecurityConfig {
 		authProvider.setPasswordEncoder(getPasswordEncoder());
 		return authProvider;
 	}
-
-
 
 
 	@Bean(name = "passwordEncoder")
@@ -133,6 +138,7 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
 	}
+
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
@@ -149,6 +155,17 @@ public class SecurityConfig {
 		return new AuthenticationFailureHandlerImpl();  // Your custom failure handler
 	}
 
-
-
+	@Bean
+	public ServletRegistrationBean<Servlet> servletRegistrationBean() {
+		ServletRegistrationBean<Servlet> bean = new ServletRegistrationBean<>(new HttpServlet() {
+			@Override
+			protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+				req.getSession().setMaxInactiveInterval(1800); // Set session timeout to 30 minutes (1800 seconds)
+				resp.getWriter().write("Session timeout configured.");
+			}
+		}, "/configSessionTimeout");
+		return bean;
+	}
 }
+
+
