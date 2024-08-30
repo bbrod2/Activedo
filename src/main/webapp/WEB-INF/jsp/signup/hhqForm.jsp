@@ -1,27 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="pub/css/IMG/normalize.css">
-	<link rel="stylesheet" type="text/css" href="pub/css/IMG/grid.css">
-	<link rel="stylesheet" type="text/css" href="pub/css/IMG/style.css">
-	<link rel="stylesheet" type="text/css" href="pub/css/IMG/Queries.css">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/pub/css/IMG/normalize.css'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/pub/css/IMG/grid.css'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/pub/css/IMG/style.css'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/pub/css/IMG/Queries.css'/>">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link
 			href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
 			rel="stylesheet">
+	<link rel="icon" href="<c:url value='/pub/css/IMG/favicon.ico'/>" type="image/x-icon">
 	<title>Insert title here</title>
 </head>
 <body>
 <nav>
 	<div>
 		<ul class="landing-nav">
-			<li class="firstNav-link"><a href="/profile">Profile</a></li>
-			<li><a href="/prescreen"> Pre-screen</a></li>
-			<li><a href="/foodlog">Food-Log</a></li>
-			<li><a href="/logout">Log-Out</a></li>
+			<li class="firstNav-link"><a href="<c:url value='/profile'/>">Profile</a></li>
+			<li><a href="<c:url value='/prescreen'/>"> Pre-screen</a></li>
+			<li><a href="<c:url value='/foodlog'/>">Food-Log</a></li>
+			<li><a href="<c:url value='/logout'/>">Log-Out</a></li>
 		</ul>
 	</div>
 </nav>
@@ -36,7 +37,7 @@
 			<h3 class="form-name">HHQ-Form</h3>
 		</div>
 		<div class="survey">
-			<form method="post" action="/hhqSubmit">
+			<form method="post" action="<c:url value='/hhqSubmit'/>">
 				<div class="row">
 					<!--If any are marked then you should consult your physician before dieting or starting training, you may need a facility with a medically qualified staff, move to STOP page-->
 					<div class="row">
@@ -189,17 +190,6 @@
 										  class="input-checkbox" />None of the Above </label>
 						</div>
 					</div>
-					<!-- -If none of the above is checked proceed to next page you are able to exercise safely on your own
-                    <div class="row">
-                        <div class="drop-down">
-                            <p class="form-paragraph">None</p>
-                        </div>
-                        <div class="response-checkbox">
-                            <label><input name="36"
-                                type="checkbox" class="input-checkbox" />None of the Above </label>
-                        </div>
-                    </div>
-                </div> -->
 					<div class="button">
 						<button type="submit" id="submit" class="form-button">
 							Submit</button>
@@ -220,7 +210,7 @@
 		</div>
 		<div class=" col span span-1-of-2">
 			<div>
-				<img src="pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
+				<img src="<c:url value='/pub/css/IMG/Activedo-logos/Activedo-logos_white.png'/>"
 					 alt="Activedo-logo" class="nav-logo">
 			</div>
 		</div>
