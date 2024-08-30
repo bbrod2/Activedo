@@ -1,5 +1,4 @@
 package perscholas.config;
-
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -27,12 +26,10 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import perscholas.security.AuthenticationFailureHandlerImpl;
 import perscholas.security.AuthenticationSuccessHandlerImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import perscholas.security.CustomAuthenticationFilter;
 import perscholas.security.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
-
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
@@ -47,15 +44,9 @@ public class SecurityConfig {
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 
-
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-		CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager);
-		customAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-		customAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
-
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-
 				.csrf(csrf -> csrf.disable())  // Disable CSRF protection if needed
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
@@ -90,7 +81,6 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-
 	@Bean
 	public SessionRegistry sessionRegistry() {
 		return new SessionRegistryImpl();
@@ -104,7 +94,6 @@ public class SecurityConfig {
 		return authProvider;
 	}
 
-
 	@Bean(name = "passwordEncoder")
 	public PasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -117,7 +106,6 @@ public class SecurityConfig {
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
-
 
 	@Bean
 	public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
@@ -139,7 +127,6 @@ public class SecurityConfig {
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
-
 
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
@@ -163,5 +150,3 @@ public class SecurityConfig {
 		return bean;
 	}
 }
-
-
