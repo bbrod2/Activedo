@@ -67,12 +67,8 @@ public class SecurityConfig {
 				)
 				.sessionManagement(sessionManagement ->
 						sessionManagement
-								.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)  // Create a session if it doesn't already exist
-								.sessionFixation().migrateSession()// Protect against session fixation attacks
-								.maximumSessions(1)
-								.sessionRegistry(sessionRegistry())  // Limit to one session per user
-								.expiredUrl("/login?expired=true")
-								.maxSessionsPreventsLogin(true)
+								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
+								.sessionFixation().newSession()
 				)
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login/login")
