@@ -9,13 +9,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -61,7 +61,10 @@ public class SecurityConfig {
 						sessionManagement
 								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
 								.sessionFixation().migrateSession()  // Protect against session fixation attacks
-								.maximumSessions(1).maxSessionsPreventsLogin(false)  // Optional: Limit to one session per user
+								.maximumSessions(1)
+								.sessionRegistry(sessionRegistry())  // Limit to one session per user
+								.expiredUrl("/login?expired=true")
+								.maxSessionsPreventsLogin(true)
 				)
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login/login")
@@ -85,7 +88,10 @@ public class SecurityConfig {
 
 
 
-
+	@Bean
+	public SessionRegistry sessionRegistry() {
+		return new SessionRegistryImpl();
+	}
 
 	@Bean
 	public DaoAuthenticationProvider getAuthenticationProvider() {
