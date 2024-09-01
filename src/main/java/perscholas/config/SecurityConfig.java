@@ -5,6 +5,7 @@ import jakarta.servlet.SessionTrackingMode;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -23,11 +24,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import perscholas.security.AuthenticationFailureHandlerImpl;
 import perscholas.security.AuthenticationSuccessHandlerImpl;
+import perscholas.security.SessionLoggingFilter;
 import perscholas.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,17 +42,22 @@ import java.util.Collections;
 public class SecurityConfig {
 
 	@Autowired
-	private AuthenticationSuccessHandlerImpl successHandler;
+	AuthenticationSuccessHandlerImpl successHandler;
 
 	@Autowired
-	private AuthenticationFailureHandlerImpl failureHandler;
+	AuthenticationFailureHandlerImpl failureHandler;
 
 	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
+	UserDetailsServiceImpl userDetailsService;
+
+
+
+	// Other beans and methods...
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
+				.addFilterBefore(new SessionLoggingFilter(), UsernamePasswordAuthenticationFilter.class) // Add session logging filter
 				.csrf(csrf -> csrf.disable())  // Disable CSRF protection if needed
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
@@ -62,8 +70,7 @@ public class SecurityConfig {
 				.sessionManagement(sessionManagement ->
 						sessionManagement
 								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
-								.sessionFixation().migrateSession()
-
+								.sessionFixation().none()
 				)
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
@@ -164,5 +171,12 @@ public class SecurityConfig {
 		};
 	}
 
+	@Bean
+	public FilterRegistrationBean<SessionLoggingFilter> loggingFilter(){
+		FilterRegistrationBean<SessionLoggingFilter> registrationBean = new FilterRegistrationBean<>();
+		registrationBean.setFilter(new SessionLoggingFilter());
+		registrationBean.addUrlPatterns("/*");
+		return registrationBean;
+	}
 
 }
