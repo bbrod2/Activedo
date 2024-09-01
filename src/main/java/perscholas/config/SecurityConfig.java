@@ -1,9 +1,11 @@
 package perscholas.config;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.SessionTrackingMode;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +32,7 @@ import perscholas.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.util.Collections;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
@@ -149,4 +152,11 @@ public class SecurityConfig {
 		}, "/configSessionTimeout");
 		return bean;
 	}
+
+	@Bean
+	public ServletContextInitializer initializer() {
+		return servletContext -> servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
+	}
+	
+
 }
