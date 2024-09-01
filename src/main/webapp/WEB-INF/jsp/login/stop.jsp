@@ -23,7 +23,7 @@
 	</div>
 	<div class="col span-1-of-2">
 		<div>
-			<img src="${pageContext.request.contextPath}pub/css/IMG/Activedo-logos/Activedo-logos_black.png"
+			<img src="${pageContext.request.contextPath}/css/IMG/Activedo-logos/Activedo-logos_black.png"
 				alt="Activedo-logo" class="stop-logo">
 		</div>
 		<div class="row class= text-container">

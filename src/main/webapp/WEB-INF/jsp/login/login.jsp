@@ -19,7 +19,7 @@
             <div class="col span-1-of-2 login-side h">
                 <div class="survey">
                     <div>
-                        <img src="pub/css/IMG/Activedo-logos/Activedo-logos_white.png" alt="Activedo-logo"
+                        <img src="${pageContext.request.contextPath}/pub/css/IMG/Activedo-logos/Activedo-logos_white.png" alt="Activedo-logo"
                             class="login-logo">
                     </div>
                     <form method="post" action="${pageContext.request.contextPath}/login">

@@ -81,14 +81,14 @@
 							</div>
 							<div class="row">
 								<div>
-									<a class="sign-up-link" href="/login">Already have an
+									<a class="sign-up-link" href="${pageContext.request.contextPath}/login">Already have an
 										account? Login</a>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div>
-								<a class="sign-up-link1" href="/index">Home Page</a>
+								<a class="sign-up-link1" href="${pageContext.request.contextPath}/index">Home Page</a>
 							</div>
 						</div>
 				</div>
