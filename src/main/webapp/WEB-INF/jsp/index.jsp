@@ -19,8 +19,8 @@
 <nav>
     <div>
         <ul class="main-nav">
-            <li><a href="/signup">Get started</a></li>
-            <li><a href="/login">Login</a></li>
+            <li><a href="${pageContext.request.contextPath}/signup">Get started</a></li>
+            <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
         </ul>
     </div>
 </nav>
