@@ -59,15 +59,6 @@ public class SecurityConfig {
 								.requestMatchers("/hhqForm").authenticated()
 								.anyRequest().authenticated()  // Require authentication for all other requests
 				)
-				.headers(headers ->
-						headers
-								.httpStrictTransportSecurity(hsts ->
-										hsts
-												.includeSubDomains(true)
-												.preload(true)
-												.maxAgeInSeconds(31536000)  // HSTS max age set to 1 year
-								)
-				)
 				.sessionManagement(sessionManagement ->
 						sessionManagement
 								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
@@ -161,11 +152,6 @@ public class SecurityConfig {
 		}, "/configSessionTimeout");
 		return bean;
 	}
-
-	@Bean
-	public ServletContextInitializer initializer() {
-		return servletContext -> servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
-	}
-
+	
 
 }
