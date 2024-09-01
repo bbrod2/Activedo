@@ -18,7 +18,7 @@
 	src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule
 	src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<script type="text/javascript" src="pub/js/script.JS"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/pub/js/script.JS"></script>
 
 </head>
 <body>
@@ -360,7 +360,7 @@
 			</div>
 			<div class=" col span span-1-of-2">
 				<div>
-					<img src="${pageContext.request.contextPath}pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
+					<img src="${pageContext.request.contextPath}/pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
 						alt="Activedo-logo" class="nav-logo">
 				</div>
 			</div>

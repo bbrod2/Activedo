@@ -220,7 +220,7 @@
 		</div>
 		<div class=" col span span-1-of-2">
 			<div>
-				<img src="${pageContext.request.contextPath}pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
+				<img src="${pageContext.request.contextPath}/pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
 					 alt="Activedo-logo" class="nav-logo">
 			</div>
 		</div>
