@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -58,7 +59,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 				.addFilterBefore(new SessionLoggingFilter(), UsernamePasswordAuthenticationFilter.class) // Add session logging filter
-				.csrf(csrf -> csrf.disable())  // Disable CSRF protection if needed
+				.csrf(AbstractHttpConfigurer::disable)  // Disable CSRF protection if needed
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
 								.requestMatchers("/index", "/index/*", "/login", "/login/**", "/error", "/css/**", "/js/**", "/signup", "/submitsignup", "/").permitAll()
@@ -66,11 +67,6 @@ public class SecurityConfig {
 								.requestMatchers("/pub/**", "/images/**").permitAll()
 								.requestMatchers("/hhqForm").authenticated()
 								.anyRequest().authenticated()  // Require authentication for all other requests
-				)
-				.sessionManagement(sessionManagement ->
-						sessionManagement
-								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
-								.sessionFixation().none()
 				)
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
