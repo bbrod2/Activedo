@@ -157,6 +157,6 @@ public class SecurityConfig {
 	public ServletContextInitializer initializer() {
 		return servletContext -> servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
 	}
-	
+
 
 }
