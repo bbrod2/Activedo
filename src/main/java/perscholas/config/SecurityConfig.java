@@ -65,7 +65,7 @@ public class SecurityConfig {
 								.sessionFixation().migrateSession()
 				)
 				.formLogin(formLogin -> formLogin
-						.loginPage("/login/login")
+						.loginPage("/login")
 						.loginProcessingUrl("/login")
 						.successHandler(successHandler)
 						.failureHandler(failureHandler)
