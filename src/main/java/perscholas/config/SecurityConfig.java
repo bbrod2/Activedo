@@ -65,7 +65,6 @@ public class SecurityConfig {
 								.requestMatchers("/index", "/index/*", "/login", "/login/**", "/error", "/css/**", "/js/**", "/signup", "/submitsignup", "/").permitAll()
 								.requestMatchers("/WEB-INF/jsp/**").permitAll()
 								.requestMatchers("/pub/**", "/images/**").permitAll()
-								.requestMatchers("/hhqForm").authenticated()
 								.anyRequest().authenticated()  // Require authentication for all other requests
 				)
 				.formLogin(formLogin -> formLogin
@@ -88,18 +87,8 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	@Bean
-	public SessionRegistry sessionRegistry() {
-		return new SessionRegistryImpl();
-	}
 
-	@Bean
-	public DaoAuthenticationProvider getAuthenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailsService);
-		authProvider.setPasswordEncoder(getPasswordEncoder());
-		return authProvider;
-	}
+
 
 	@Bean(name = "passwordEncoder")
 	public PasswordEncoder getPasswordEncoder() {
@@ -114,26 +103,6 @@ public class SecurityConfig {
 		return resolver;
 	}
 
-	@Bean
-	public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
-		StrictHttpFirewall firewall = new StrictHttpFirewall();
-		firewall.setAllowUrlEncodedSlash(true);  // Allows URLs with "%2F"
-		firewall.setAllowSemicolon(true);  // Allows URLs with semicolons ";"
-		firewall.setAllowBackSlash(true);  // Allows backslashes "\" in URLs
-		firewall.setAllowUrlEncodedPercent(true);  // Allows URLs with "%25"
-		firewall.setAllowUrlEncodedDoubleSlash(true);  // Allows double slashes "//" in URLs
-		return firewall;
-	}
-
-	@Bean
-	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
-	}
-
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-		return authenticationConfiguration.getAuthenticationManager();
-	}
 
 	@Bean
 	public AuthenticationSuccessHandler authenticationSuccessHandler() {
