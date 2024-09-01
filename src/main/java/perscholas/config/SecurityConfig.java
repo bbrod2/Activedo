@@ -62,7 +62,7 @@ public class SecurityConfig {
 				.sessionManagement(sessionManagement ->
 						sessionManagement
 								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
-								.sessionFixation().newSession()
+								.sessionFixation().migrateSession()
 				)
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login/login")
