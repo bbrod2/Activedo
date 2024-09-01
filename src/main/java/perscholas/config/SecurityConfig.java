@@ -59,9 +59,6 @@ public class SecurityConfig {
 								.requestMatchers("/hhqForm").authenticated()
 								.anyRequest().authenticated()  // Require authentication for all other requests
 				)
-				.requiresChannel(channel ->
-						channel.anyRequest().requiresSecure()  // Force HTTPS
-				)
 				.headers(headers ->
 						headers
 								.httpStrictTransportSecurity(hsts ->
