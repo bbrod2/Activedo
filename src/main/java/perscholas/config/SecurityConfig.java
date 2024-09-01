@@ -73,6 +73,11 @@ public class SecurityConfig {
 						.successHandler(successHandler)
 						.failureHandler(failureHandler)
 				)
+				.sessionManagement(sessionManagement ->
+						sessionManagement
+								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
+								.sessionFixation().migrateSession()
+				)
 				.logout(logout ->
 						logout
 								.logoutUrl("/logout")
@@ -82,7 +87,9 @@ public class SecurityConfig {
 				.exceptionHandling(exceptionHandling ->
 						exceptionHandling
 								.accessDeniedPage("/error")  // Custom access denied page
-				);
+
+				)
+				.anonymous(AbstractHttpConfigurer::disable); ;
 
 		return http.build();
 	}
