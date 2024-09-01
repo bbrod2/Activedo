@@ -5,10 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Activedo</title>
-<link rel="stylesheet" type="text/css" href="pub/css/IMG/normalize.css">
-    <link rel="stylesheet" type="text/css" href="pub/css/IMG/grid.css">
-    <link rel="stylesheet" type="text/css" href="pub/css/IMG/style.css">
-    <link rel="stylesheet" type="text/css" href="pub/css/IMG/Queries.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/normalize.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/grid.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/Queries.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
         rel="stylesheet">
@@ -48,13 +48,13 @@
                             </div>
                             <div class="row">
                                 <div>
-                                    <a class="sign-up-link" href="/signup">Don't have an account? Sign up</a>
+                                    <a class="sign-up-link" href="${pageContext.request.contextPath}/signup">Don't have an account? Sign up</a>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div>
-                                    <a class="sign-up-link1" href="/index">Home Page</a>
+                                    <a class="sign-up-link1" href="${pageContext.request.contextPath}/index">Home Page</a>
                                 </div>
                             </div>
                         </div>

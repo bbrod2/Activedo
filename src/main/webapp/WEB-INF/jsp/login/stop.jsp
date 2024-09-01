@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="pub/css/IMG/normalize.css">
-<link rel="stylesheet" type="text/css" href="pub/css/IMG/grid.css">
-<link rel="stylesheet" type="text/css"
-	href="pub/css/IMG/style.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/normalize.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/grid.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/style.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
@@ -17,14 +16,14 @@
 <body>
 	<div class="stop col span-1-of-2">
 		<div>
-			<img src="pub/css/IMG/heart.jpg" alt="Heart background"
+			<img src="${pageContext.request.contextPath}pub/css/IMG/heart.jpg" alt="Heart background"
 				class="heart-background">
 		</div>
 
 	</div>
 	<div class="col span-1-of-2">
 		<div>
-			<img src="pub/css/IMG/Activedo-logos/Activedo-logos_black.png"
+			<img src="${pageContext.request.contextPath}pub/css/IMG/Activedo-logos/Activedo-logos_black.png"
 				alt="Activedo-logo" class="stop-logo">
 		</div>
 		<div class="row class= text-container">

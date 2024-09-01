@@ -4,10 +4,10 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="pub/css/IMG/normalize.css">
-	<link rel="stylesheet" type="text/css" href="pub/css/IMG/grid.css">
-	<link rel="stylesheet" type="text/css" href="pub/css/IMG/style.css">
-	<link rel="stylesheet" type="text/css" href="pub/css/IMG/Queries.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/normalize.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/grid.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/style.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/Queries.css">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link
 			href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
@@ -18,10 +18,10 @@
 <nav>
 	<div>
 		<ul class="landing-nav">
-			<li class="firstNav-link"><a href="/profile">Profile</a></li>
-			<li><a href="/prescreen"> Pre-screen</a></li>
-			<li><a href="/foodlog">Food-Log</a></li>
-			<li><a href="/logout">Log-Out</a></li>
+			<li class="firstNav-link"><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
+			<li><a href="${pageContext.request.contextPath}/prescreen"> Pre-screen</a></li>
+			<li><a href="${pageContext.request.contextPath}/foodlog">Food-Log</a></li>
+			<li><a href="${pageContext.request.contextPath}/logout">Log-Out</a></li>
 		</ul>
 	</div>
 </nav>
@@ -36,7 +36,7 @@
 			<h3 class="form-name">HHQ-Form</h3>
 		</div>
 		<div class="survey">
-			<form method="post" action="/hhqSubmit">
+			<form method="post" action="${pageContext.request.contextPath}/hhqSubmit">
 				<div class="row">
 					<!--If any are marked then you should consult your physician before dieting or starting training, you may need a facility with a medically qualified staff, move to STOP page-->
 					<div class="row">
@@ -220,7 +220,7 @@
 		</div>
 		<div class=" col span span-1-of-2">
 			<div>
-				<img src="pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
+				<img src="${pageContext.request.contextPath}pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
 					 alt="Activedo-logo" class="nav-logo">
 			</div>
 		</div>

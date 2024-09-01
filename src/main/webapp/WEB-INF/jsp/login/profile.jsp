@@ -10,10 +10,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!----content below is a place holder until I get real name-->
     <meta name="description" content="Get Fit and Get Healthy">
-    <link rel="stylesheet" type="text/css" href="pub/css/IMG/normalize.css">
-    <link rel="stylesheet" type="text/css" href="pub/css/IMG/grid.css">
-    <link rel="stylesheet" type="text/css" href="pub/css/IMG/style.css">
-    <link rel="stylesheet" type="text/css" href="pub/css/IMG/Queries.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/normalize.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/grid.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/Queries.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
         rel="stylesheet">
@@ -23,10 +23,10 @@
   <nav>
         <div>
             <ul class="landing-nav">
-                <li><a href="/prescreen"> Pre-screen</a> </li>
-                <li><a href="/hhqForm">HHQ Form</a> </li>
-                <li><a href="/foodlog">Food-Log</a> </li>
-                <li><a href="/logout"> Log-Out</a> </li>
+                <li><a href="${pageContext.request.contextPath}/prescreen"> Pre-screen</a> </li>
+                <li><a href="${pageContext.request.contextPath}/hhqForm">HHQ Form</a> </li>
+                <li><a href="${pageContext.request.contextPath}/foodlog">Food-Log</a> </li>
+                <li><a href="${pageContext.request.contextPath}/logout"> Log-Out</a> </li>
             </ul>
         </div>
     </nav>
@@ -91,7 +91,7 @@
             </div>
             <div class=" col span span-1-of-2">
                 <div>
-                    <img src="pub/css/IMG/Activedo-logos/Activedo-logos_white.png" alt="Activedo-logo"
+                    <img src="${pageContext.request.contextPath}pub/css/IMG/Activedo-logos/Activedo-logos_white.png" alt="Activedo-logo"
                         class="nav-logo">
                 </div>
             </div>

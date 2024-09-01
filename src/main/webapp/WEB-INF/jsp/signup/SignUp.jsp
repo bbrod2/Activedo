@@ -7,30 +7,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Activedo</title>
-<link rel="stylesheet" type="text/css" href="/pub/css/IMG/normalize.css">
-<link rel="stylesheet" type="text/css" href="/pub/css/IMG/grid.css">
-<link rel="stylesheet" type="text/css"
-	href="/pub/css/IMG/style.css">
-<link rel="stylesheet" type="text/css"
-	href="/pub/css/IMG/Queries.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/normalize.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/grid.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/style.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/Queries.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
 	rel="stylesheet">
-	<script type="text/javascript" src="pub/js/script.JS"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}pub/js/script.JS"></script>
 </head>
 <body>
 	<section class="login-section">
 		<div class=" row shadow sign-up-con">
 			<div class="col span-1-of-2 login-side s">
 				<div class="survey">
-					<form method="post" action="/submitsignup" name="sign-up"
+					<form method="post" action="${pageContext.request.contextPath}/submitsignup" name="sign-up"
 						  onsubmit="return validateGender() && validateUsername() && validateAge()">
 				
 						<div class="row">
 							<div>
 								<img
-									src="/pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
+									src="${pageContext.request.contextPath}/pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
 									alt="Activedo-logo" class="login-logo">
 							</div>
 							<div>

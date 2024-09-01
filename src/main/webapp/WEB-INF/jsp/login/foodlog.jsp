@@ -6,10 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Activedo</title>
-<link rel="stylesheet" type="text/css" href="pub/css/IMG/normalize.css">
-<link rel="stylesheet" type="text/css" href="pub/css/IMG/grid.css">
-<link rel="stylesheet" type="text/css" href="pub/css/IMG/style.css">
-<link rel="stylesheet" type="text/css" href="pub/css/IMG/Queries.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/normalize.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/grid.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/pub/css/IMG/Queries.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
@@ -25,10 +25,10 @@
 	<nav>
 		<div>
 			<ul class="landing-nav">
-				<li><a href="/hhqForm">Hhq Form</a></li>
-				<li><a href="/prescreen">Pre-screen</a></li>
-				<li><a href="/profile"> Profile</a></li>
-				<li><a href="/logout"> Log-out</a></li>
+				<li><a href="${pageContext.request.contextPath}/hhqForm">Hhq Form</a></li>
+				<li><a href="${pageContext.request.contextPath}/prescreen">Pre-screen</a></li>
+				<li><a href="${pageContext.request.contextPath}/profile"> Profile</a></li>
+				<li><a href="${pageContext.request.contextPath}/logout"> Log-out</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -129,7 +129,7 @@
                             onclick="displayForm()">
                     </td>
                     <td style="max-width: 300px; display: none;" id="breakFastForm">
-                        <form method="post" action="/foodlog">
+                        <form method="post" action="${pageContext.request.contextPath}/foodlog">
                             <input type="text" name="foodName" id="foodName" placeholder="Food Item"  required>
                             <input type="text" name="quantity" id="quantity" placeholder="Quantity"   required>
                             <input type="text" name="calories" id="calories" placeholder="Calories"  required>
@@ -156,7 +156,7 @@
                         </ion-icon>
                     </td>
                     <td style="max-width: 300px; display: none;" id="breakFastSearchBar">
-                        <form method="post" action="/breakFast">
+                        <form method="post" action="${pageContext.request.contextPath}/breakFast">
                         <Input type = "hidden" name= "mealType" value ="breakfast">
                         <Input type = "hidden" name= "day" value ="${day}">
                         <input type="text" name="foodName" id="search" placeholder="Search" required>
@@ -207,7 +207,7 @@
                         </ion-icon>
                     </td>
                     <td id="lunchSearchBar" style="display: none;">
-                       <form method="post" action="/lunch">
+                       <form method="post" action="${pageContext.request.contextPath}/lunch">
                         <Input type = "hidden" name= "mealType" value ="lunch">
                         <Input type = "hidden" name= "day" value ="${day}">
                          <input type="text" name="foodName" id="search" placeholder="Search" required>
@@ -256,7 +256,7 @@
                         </ion-icon>
                     </td>
                     <td id="dinnerSearchBar" style="display: none;">
-                        <form method="post" action="/dinner">
+                        <form method="post" action="${pageContext.request.contextPath}/dinner">
                         <Input type = "hidden" name= "mealType" value ="dinner">
                         <Input type = "hidden" name= "day" value ="${day}">
                         <input type="text" name="foodName" id="search" placeholder="Search" required>
@@ -308,7 +308,7 @@
                         </ion-icon>
                     </td>
                     <td id="snackSearchBar" style="display: none;">
-                        <form method="post" action="/snack">
+                        <form method="post" action="${pageContext.request.contextPath}/snack">
                         <Input type = "hidden" name= "mealType" value ="snack">
                          <Input type = "hidden" name= "day" value ="${day}">
                         <input type="text" name="foodName" id="search" placeholder="Search" required>
@@ -360,7 +360,7 @@
 			</div>
 			<div class=" col span span-1-of-2">
 				<div>
-					<img src="pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
+					<img src="${pageContext.request.contextPath}pub/css/IMG/Activedo-logos/Activedo-logos_white.png"
 						alt="Activedo-logo" class="nav-logo">
 				</div>
 			</div>
