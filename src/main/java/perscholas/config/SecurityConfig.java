@@ -1,10 +1,13 @@
 package perscholas.config;
+
 import jakarta.servlet.Servlet;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.SessionTrackingMode;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +32,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import perscholas.security.AuthenticationFailureHandlerImpl;
 import perscholas.security.AuthenticationSuccessHandlerImpl;
 import perscholas.security.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -63,7 +65,10 @@ public class SecurityConfig {
 						sessionManagement
 								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
 								.sessionFixation().migrateSession()
-								
+								.invalidSessionUrl("/login?session=invalid")  // Redirect to login on session invalidation
+								.maximumSessions(1)
+								.sessionRegistry(sessionRegistry())
+								.expiredUrl("/login?session=expired")
 				)
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
@@ -163,6 +168,4 @@ public class SecurityConfig {
 			servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
 		};
 	}
-
-
 }
