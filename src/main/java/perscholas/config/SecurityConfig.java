@@ -63,6 +63,7 @@ public class SecurityConfig {
 						sessionManagement
 								.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)  // Create a session if it doesn't already exist
 								.sessionFixation().migrateSession()
+								
 				)
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
@@ -152,6 +153,16 @@ public class SecurityConfig {
 		}, "/configSessionTimeout");
 		return bean;
 	}
-	
+
+	@Bean
+	public ServletContextInitializer servletContextInitializer() {
+		return servletContext -> {
+			servletContext.getSessionCookieConfig().setHttpOnly(true);
+			servletContext.getSessionCookieConfig().setSecure(true); // Ensure it's secure
+			servletContext.getSessionCookieConfig().setName("JSESSIONID");
+			servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
+		};
+	}
+
 
 }
