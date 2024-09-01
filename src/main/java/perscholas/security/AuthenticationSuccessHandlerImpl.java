@@ -21,6 +21,10 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		// Log the successful authentication
 		System.out.println("Authentication successful for user: " + authentication.getName());
 
+		// Log the old session ID
+		String oldSessionId = request.getSession().getId();
+		System.out.println("Old Session ID: " + oldSessionId);
+
 		// Ensure that the authentication is set in the SecurityContextHolder
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -28,5 +32,9 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		UrlPathHelper helper = new UrlPathHelper();
 		String contextPath = helper.getContextPath(request);
 		response.sendRedirect(contextPath + "/hhqForm");
+
+		// Log the new session ID after redirection
+		String newSessionId = request.getSession().getId();
+		System.out.println("New Session ID: " + newSessionId);
 	}
 }
