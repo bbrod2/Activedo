@@ -88,8 +88,7 @@ public class SecurityConfig {
 						exceptionHandling
 								.accessDeniedPage("/error")  // Custom access denied page
 
-				)
-				.anonymous(AbstractHttpConfigurer::disable); ;
+				);
 
 		return http.build();
 	}
