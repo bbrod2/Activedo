@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+
 
 @Configuration
 @EnableScheduling
@@ -31,13 +31,27 @@ public class SessionTableInitializer {
                     PRINCIPAL_NAME VARCHAR(100),
                     CONSTRAINT SPRING_SESSION_PK PRIMARY KEY (PRIMARY_ID)
                 );
-            """
-            );
+            """);
 
-            jdbcTemplate.execute("CREATE UNIQUE INDEX IF NOT EXISTS SPRING_SESSION_IX1 ON SPRING_SESSION (SESSION_ID);");
-            jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS SPRING_SESSION_IX2 ON SPRING_SESSION (EXPIRY_TIME);");
-            jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS SPRING_SESSION_IX3 ON SPRING_SESSION (PRINCIPAL_NAME);");
+            // Manually check if indexes exist before creating them
+            createIndexIfNotExists("SPRING_SESSION_IX1", "CREATE UNIQUE INDEX SPRING_SESSION_IX1 ON SPRING_SESSION (SESSION_ID);");
+            createIndexIfNotExists("SPRING_SESSION_IX2", "CREATE INDEX SPRING_SESSION_IX2 ON SPRING_SESSION (EXPIRY_TIME);");
+            createIndexIfNotExists("SPRING_SESSION_IX3", "CREATE INDEX SPRING_SESSION_IX3 ON SPRING_SESSION (PRINCIPAL_NAME);");
         };
+    }
+
+    private void createIndexIfNotExists(String indexName, String createIndexSQL) {
+        Integer indexExists = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM information_schema.statistics WHERE table_schema = DATABASE() AND table_name = 'SPRING_SESSION' AND index_name = ?",
+                Integer.class, indexName
+        );
+
+        if (indexExists == 0) {
+            jdbcTemplate.execute(createIndexSQL);
+            System.out.println("✅ Index " + indexName + " created successfully.");
+        } else {
+            System.out.println("✅ Index " + indexName + " already exists.");
+        }
     }
 
     @Scheduled(cron = "0 */15 * * * *")  // Runs every 15 minutes
@@ -46,4 +60,3 @@ public class SessionTableInitializer {
         System.out.println("✅ Expired sessions cleaned up.");
     }
 }
-
