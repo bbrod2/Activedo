@@ -1,21 +1,15 @@
 /**
  * 
  */
-/*------------------------------------------------------*/
-/*--------------sign-up-form---------------------------*/
-/*-----------------------------------------------------*/
-
 document.addEventListener("DOMContentLoaded", function() {
     // Sign-Up Form Validation
 
     const form = document.querySelector("form[name='sign-up']");
-    const email = document.getElementById("Username");
     const password = document.getElementById("password");
     const gender = document.getElementById("gender");
     const age = document.getElementById("age");
 
     // Real-time validation
-    email.addEventListener("input", () => validateEmail(email));
     password.addEventListener("input", () => validatePassword(password));
     gender.addEventListener("input", () => validateGender(gender));
     age.addEventListener("input", () => validateAge(age));
@@ -23,22 +17,12 @@ document.addEventListener("DOMContentLoaded", function() {
     form.addEventListener("submit", function(event) {
         event.preventDefault(); // Prevent form submission
 
-        let valid = validateEmail(email) & validatePassword(password) & validateGender(gender) & validateAge(age);
+        let valid = validatePassword(password) & validateGender(gender) & validateAge(age);
 
         if (valid) {
             form.submit();
         }
     });
-
-    function validateEmail(element) {
-        if (!element.value.includes("@")) {
-            displayError(element, "Username must be a valid email");
-            return false;
-        } else {
-            clearError(element);
-            return true;
-        }
-    }
 
     function validatePassword(element) {
         const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{5,25}$/;
@@ -74,20 +58,18 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayError(element, message) {
         clearError(element);
         const error = document.createElement("span");
-        error.className = "error";
+        error.className = "error-message";
         error.textContent = message;
         element.insertAdjacentElement("afterend", error);
     }
 
     function clearError(element) {
         const error = element.nextElementSibling;
-        if (error && error.classList.contains("error")) {
+        if (error && error.classList.contains("error-message")) {
             error.remove();
         }
     }
 });
-
-
 /*------------------------------------------------------*/
 /*--------------sign-up-form-end-----------------*/
 /*-----------------------------------------------------*/
