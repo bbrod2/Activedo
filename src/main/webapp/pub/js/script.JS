@@ -5,64 +5,88 @@
 /*--------------sign-up-form---------------------------*/
 /*-----------------------------------------------------*/
 
-function validateUsername() {
-    let string = document.getElementById("username").value;
-    const regex1 = /@/;
-    const isExisting = regex1.test(string);
-    console.log(isExisting);
-    if (isExisting == true) {
+document.addEventListener("DOMContentLoaded", function() {
+    // Sign-Up Form Validation
 
-        return true;
+    const form = document.querySelector("form[name='sign-up']");
+    const email = document.getElementById("Username");
+    const password = document.getElementById("password");
+    const gender = document.getElementById("gender");
+    const age = document.getElementById("age");
 
-    } else {
+    // Real-time validation
+    email.addEventListener("input", () => validateEmail(email));
+    password.addEventListener("input", () => validatePassword(password));
+    gender.addEventListener("input", () => validateGender(gender));
+    age.addEventListener("input", () => validateAge(age));
 
-        alert("Username must be a valid email");
-        return false;
-    }
-}
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
 
+        let valid = validateEmail(email) & validatePassword(password) & validateGender(gender) & validateAge(age);
 
+        if (valid) {
+            form.submit();
+        }
+    });
 
-function validateGender() {
-    let string = document.getElementById("gender").value;
-
-    const regex = /^Male$/;
-    const regex1 = /^Female$/;
-    const isExisting = regex1.test(string) || regex.test(string);
-    if (isExisting == true) {
-
-        return true;
-
-    } else {
-
-        alert("Input Male or Female");
-        return false;
-    }
-}
-
-function validateAge() {
-    let string = document.getElementById("age").value;
-    const regex = /[1-9]+/;
-    const isExisting = regex.test(string);
-    if(isExisting == true && string >= 18){
-        return true;
-    } else{
-        alert("Age must be 18 or greater");
-        return false
+    function validateEmail(element) {
+        if (!element.value.includes("@")) {
+            displayError(element, "Username must be a valid email");
+            return false;
+        } else {
+            clearError(element);
+            return true;
+        }
     }
 
-}
+    function validatePassword(element) {
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{5,25}$/;
+        if (!passwordRegex.test(element.value)) {
+            displayError(element, "Password must be 5-25 characters, include an uppercase letter, a number, and a special character.");
+            return false;
+        } else {
+            clearError(element);
+            return true;
+        }
+    }
 
+    function validateGender(element) {
+        if (element.value !== "Male" && element.value !== "Female") {
+            displayError(element, "Input 'Male' or 'Female'.");
+            return false;
+        } else {
+            clearError(element);
+            return true;
+        }
+    }
 
-const username = document.getElementById("username");
-username.addEventListener('submit', validateUsername);
+    function validateAge(element) {
+        if (parseInt(element.value) < 18) {
+            displayError(element, "Age must be 18 or greater.");
+            return false;
+        } else {
+            clearError(element);
+            return true;
+        }
+    }
 
+    function displayError(element, message) {
+        clearError(element);
+        const error = document.createElement("span");
+        error.className = "error";
+        error.textContent = message;
+        element.insertAdjacentElement("afterend", error);
+    }
 
-const gender = document.getElementById("gender");
-gender.addEventListener('submit', validateGender);
+    function clearError(element) {
+        const error = element.nextElementSibling;
+        if (error && error.classList.contains("error")) {
+            error.remove();
+        }
+    }
+});
 
-const age = document.getElementById("age");
-age.addEventListener('submit', validateAge);
 
 /*------------------------------------------------------*/
 /*--------------sign-up-form-end-----------------*/
