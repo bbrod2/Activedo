@@ -1,5 +1,4 @@
 
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,7 +21,7 @@
     <div class="card">
         <div class="card-body">
             <h2 class="text-center mb-4">Sign-Up Now</h2>
-            <form method="post" action="${pageContext.request.contextPath}/submitsignup">
+            <form method="post" action="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/submitsignup">
 
                 <div class="mb-3">
                     <label for="Username" class="form-label">Username</label>
@@ -62,11 +61,11 @@
                 <button type="submit" class="btn btn-primary w-100">Sign-Up</button>
 
                 <div class="mt-3 text-center">
-                    <a href="${pageContext.request.contextPath}/login">Already have an account? Login</a>
+                    <a href="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/login">Already have an account? Login</a>
                 </div>
 
                 <div class="mt-2 text-center">
-                    <a href="${pageContext.request.contextPath}/index">Home Page</a>
+                    <a href="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/index">Home Page</a>
                 </div>
             </form>
         </div>
