@@ -28,53 +28,36 @@ public class SignUpController {
 	
 	@Autowired
 	private PasswordEncoder encoder;
+
 	@PermitAll
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView signUpPage() {
         return new ModelAndView("signup/SignUp");
 	}
+
 	@PermitAll
 	@RequestMapping(value = "/submitsignup", method = RequestMethod.POST)
 	public ModelAndView signUpSubmit(@Valid SignUpForm form, BindingResult bindingResult) throws Exception {
 		ModelAndView result = new ModelAndView("signup/SignUp");
-
-		// form validation
 		result.addObject("form", form);
 
-		System.out.println(form);
-
 		if (bindingResult.hasErrors()) {
-
-			List<String> errors = new ArrayList<String>();
-
-			for (FieldError error : bindingResult.getFieldErrors()) {
-				System.out.println(error.getField() + " = " + error.getDefaultMessage());
-				errors.add(error.getDefaultMessage());
-			}
-
 			result.addObject("errorFields", bindingResult.getFieldErrors());
-			result.addObject("errors", errors);
-
 			return result;
-
 		}
 
-		// business logic
+		// Create and save the user
 		User user = new User();
-
 		user.setEmail(form.getEmail());
-		String encoded = encoder.encode(form.getPassword());
-		user.setPassword(encoded);
+		user.setPassword(encoder.encode(form.getPassword()));
 		user.setFullName(form.getFull_name());
 		user.setGender(form.getGender());
 		user.setAge(form.getAge());
 
 		userDao.save(user);
 
-		// goto the next page
-
-		ModelAndView result2 = new ModelAndView("redirect:/login");
-		return result2;
+		// Redirect to login page after successful registration
+		return new ModelAndView("redirect:/login");
 	}
 
 
