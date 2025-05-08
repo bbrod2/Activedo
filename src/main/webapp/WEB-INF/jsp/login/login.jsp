@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +11,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap"
         rel="stylesheet">
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
  <section class="login-section">
@@ -34,11 +41,19 @@
                             </div>
                             <div class="row">
                                 <div>
-                                    <input type="password" name="password" id="name"
+                                    <input type="password" name="password" id="password"
                                         placeholder="&middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot;"
                                         required>
                                 </div>
                             </div>
+
+                            <!-- Error Message Display -->
+                            <c:if test="${param.error != null}">
+                                <div class="error-message">
+                                    Invalid username or password. Please try again.
+                                </div>
+                            </c:if>
+
                             <div class="row">
                                 <div>
                                     <button type="submit" id="submit" class="login-button">
@@ -65,7 +80,6 @@
             <div class="col span-1-of-2 login-pic">
                 <p> </p>
             </div>
-
         </div>
     </section>
 
