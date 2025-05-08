@@ -17,8 +17,17 @@
             font-size: 0.9rem;
             margin-top: 10px;
             text-align: center;
+            display: none;
         }
     </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("error")) {
+                document.getElementById("error-message").style.display = "block";
+            }
+        });
+    </script>
 </head>
 <body>
  <section class="login-section">
@@ -48,11 +57,9 @@
                             </div>
 
                             <!-- Error Message Display -->
-                            <c:if test="${param.error != null}">
-                                <div class="error-message">
-                                    Invalid username or password. Please try again.
-                                </div>
-                            </c:if>
+                            <div id="error-message" class="error-message">
+                                Invalid username or password. Please try again.
+                            </div>
 
                             <div class="row">
                                 <div>
@@ -80,6 +87,7 @@
             <div class="col span-1-of-2 login-pic">
                 <p> </p>
             </div>
+
         </div>
     </section>
 
